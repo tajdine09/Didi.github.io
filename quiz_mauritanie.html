@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quiz sur la Mauritanie</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f4f4f4;
+        }
+        .container {
+            width: 50%;
+            margin: auto;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin: 10px 0;
+            border: none;
+            background: #007BFF;
+            color: white;
+            font-size: 16px;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+        button:hover {
+            background: #0056b3;
+        }
+        #score {
+            font-size: 20px;
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quiz sur la Mauritanie</h1>
+        <div id="quiz-container"></div>
+        <div id="score"></div>
+        <button onclick="restartQuiz()">Recommencer</button>
+    </div>
+
+    <script>
+        const questions = [
+            { question: "En quelle année la Mauritanie a-t-elle obtenu son indépendance ?", options: ["1958", "1960", "1962", "1965"], answer: "1960" },
+            { question: "Qui a été le premier président de la Mauritanie ?", options: ["Moktar Ould Daddah", "Maaouya Ould Sid'Ahmed Taya", "Mohamed Khouna Ould Haidalla", "Sidi Ould Cheikh Abdallahi"], answer: "Moktar Ould Daddah" },
+            { question: "Quelle est la superficie approximative de la Mauritanie ?", options: ["500 000 km²", "1 030 700 km²", "1 200 000 km²", "2 500 000 km²"], answer: "1 030 700 km²" },
+            { question: "Quel est le plus grand fleuve qui traverse la Mauritanie ?", options: ["Sénégal", "Niger", "Volta", "Nil"], answer: "Sénégal" },
+            { question: "Quel empire dominait la Mauritanie au XIe siècle ?", options: ["Empire du Ghana", "Empire du Mali", "Empire Songhaï", "Empire Almoravide"], answer: "Empire Almoravide" },
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            if (currentQuestionIndex >= questions.length) {
+                document.getElementById("quiz-container").innerHTML = "<h2>Quiz terminé !</h2><p>Votre score est de " + score + "/" + questions.length + ".</p>";
+                return;
+            }
+
+            let questionData = questions[currentQuestionIndex];
+            let quizHTML = "<h2>" + questionData.question + "</h2>";
+            questionData.options.forEach(option => {
+                quizHTML += `<button onclick="checkAnswer('${option}')">${option}</button>`;
+            });
+
+            document.getElementById("quiz-container").innerHTML = quizHTML;
+        }
+
+        function checkAnswer(selectedOption) {
+            if (selectedOption === questions[currentQuestionIndex].answer) {
+                score++;
+            }
+            currentQuestionIndex++;
+            loadQuestion();
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            loadQuestion();
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
